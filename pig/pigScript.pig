@@ -1,4 +1,9 @@
-vehicle_data = LOAD '/user/ubuntu/AggOutput/' USING PigStorage(',') AS (uid:chararray, Occupancy:float);
+vehicle_data = LOAD '/home/ubuntu/mapmycab/pig/cabFile.txt' USING PigStorage(',') AS (uid:chararray, latitude:float, longitude:float, occupancy:int, timestamp:float);
+
+
+
+
+
 -- by_driver = GROUP vehicle_data BY uid;
 -- occ_avg = FOREACH by_driver GENERATE
    -- group as uid,
