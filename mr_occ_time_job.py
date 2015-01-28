@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from mrjob.job import MRJob
 import datetime
 
