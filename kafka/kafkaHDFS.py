@@ -50,14 +50,14 @@ def flush_to_hdfs(output_dir, topic):
     global tempfile_path, tempfile, batch_counter
     tempfile.close()
     hadoop_dir = "%s/%s" % (output_dir, topic)
-    hadoop_path = hadoop_dir + "/%s_%s.dat" % (timestamp, batch_counter)
+    hadoop_path = hadoop_dir + "/%s_%s.txt" % (timestamp, batch_counter)
     print "/usr/bin/hdfs dfs -mkdir %s" % hadoop_dir
     os.system("/usr/bin/hdfs dfs -mkdir %s" % hadoop_dir)
     print "/usr/bin/hdfs dfs -put -f %s %s" % (tempfile_path, hadoop_path)
     os.system("/usr/bin/hdfs dfs -put -f %s %s" % (tempfile_path, hadoop_path))
     os.remove(tempfile_path)
     batch_counter += 1
-    tempfile_path = "/tmp/kafka_%s_%s_%s_%s.dat" % (topic, group, timestamp, batch_counter)
+    tempfile_path = "/tmp/kafka_%s_%s_%s_%s.txt" % (topic, group, timestamp, batch_counter)
     tempfile = open(tempfile_path,"w")
 
 def consume_topic(topic, group, output_dir, frequency):
@@ -68,7 +68,7 @@ def consume_topic(topic, group, output_dir, frequency):
     kafka_consumer = SimpleConsumer(kafka, group, topic, max_buffer_size=1310720000)
     
     #open file for writing
-    tempfile_path = "/tmp/kafka_%s_%s_%s_%s.dat" % (topic, group, timestamp, batch_counter)
+    tempfile_path = "/tmp/kafka_%s_%s_%s_%s.txt" % (topic, group, timestamp, batch_counter)
     tempfile = open(tempfile_path,"w")
     log_has_at_least_one = False #did we log at least one entry?
     while True:

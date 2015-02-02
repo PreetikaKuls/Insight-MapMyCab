@@ -13,10 +13,12 @@ timestamp = None
 def genData(topic):
     producer = KeyedProducer(kafka)
     with open(source_file) as f:
+	count = 0
         for line in f:
-            #print "sending line"
+            print "SENDING LINE: " + str(count) + " : " + line 
             key = line.split(" ")[0]
             producer.send(topic, key, line.rstrip())
+	    count = count + 1
     #producer.stop()
 
 genData("CabData")

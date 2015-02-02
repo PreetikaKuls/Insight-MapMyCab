@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from mrjob.job import MRJob
 from mr_occ_time_job import OccTimeJob
 import datetime
