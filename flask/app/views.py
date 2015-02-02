@@ -5,10 +5,6 @@ from flask import jsonify, render_template
 import happybase
 import ast
 
-#connection = happybase.connection('54.215.177.124')
-#table = connection.table('hbase_dow_table')
-
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -20,7 +16,7 @@ def test_chart():
 
 @app.route('/dow/<month>')
 def dow(month):
-	hbase = happybase.Connection('54.215.177.124')
+	hbase = happybase.Connection(ip)
 	table = hbase.table('dow_stats')
 	rows = table.scan()
 	keys, pickups, dropoffs, occ, dist = ([] for i in range(5))
@@ -38,7 +34,7 @@ def dow(month):
 
 @app.route('/doworder')
 def doworder():
-        hbase = happybase.Connection('54.215.177.124')
+        hbase = happybase.Connection(ip)
         table = hbase.table('dow_stats')
 	keys = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 	totalCabs = 500.0
@@ -57,7 +53,7 @@ def doworder():
 
 @app.route('/hod/<day>')
 def hod(day):
-	hbase = happybase.Connection('54.215.177.124')
+	hbase = happybase.Connection(ip)
 	table = hbase.table('dow_stats')
        	rows = table.scan()
         keys, pickups, dropoffs, occ, dist = ([] for i in range(5))
@@ -78,7 +74,7 @@ def hod(day):
 
 @app.route('/hodorder/<day>')
 def hodorder(day):
-        hbase = happybase.Connection('54.215.177.124')
+        hbase = happybase.Connection(ip)
         table = hbase.table('dow_stats')
 
 	results = [{} for x in range(24)]
