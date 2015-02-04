@@ -5,7 +5,7 @@ from datetime import datetime
 #from docopt import docopt
 
 kafka = KafkaClient("localhost:9092")
-source_file = '/home/ubuntu/data/cabDatabase.txt'
+source_file = '/home/ubuntu/sortedData.txt'
 tempfile_path = None
 tempfile = None
 batch_counter = 0
