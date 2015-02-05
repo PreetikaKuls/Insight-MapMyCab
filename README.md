@@ -13,7 +13,26 @@ Real-Time:
 The historical data set is played back to simulate real-time behavior.
 
 #Data Processing Framework
-The following tools have been utilized for various part of the pipeline:
+The data pipeline is represented in the figure below:
+Ingestion (Kafka-): 
+Batch Storage: HDFS
+Batch Processing: Hive, MrJob
+Real-Time Streaming: Storm
+Front-end: Flask
+
+#Data Transformations
+Following metrics are computed via a MapReduce operation on the raw dataset (MrJob):
+- Pickup events (occupancy change 0 to 1)
+- Drop off events (occupancy change 1 to 0)
+- Miles travelled (based on latitude and longitude)
+
+The resulting table is aggregated using Hive to enable batch queries such as:
+- Time of day profile of pickups, dropoffs, miles travelled 
+- Day of the week profile of metrics 
+- Individual cab metrics (top 10 cabs with most miles travelled)
+
+
+
 
 
 
