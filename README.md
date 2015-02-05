@@ -10,7 +10,17 @@ The project is based on historical geolocation data for 500 yellow cabs in San F
 <img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/raw_data.png" alt="alt text" width="300" height="200">
 
 Real-Time:
-Since at this point, there is no API for obtaining real-time data for the cabs, the historical data set is played back to simulate real-time behavior.
+The historical data set is played back to simulate real-time behavior.
+
+#Data Processing Framework
+The following tools have been utilized for various part of the pipeline:
+
+
+
+#Live Demo:
+A Live Demo of the project is available here:
+Charts from sample batch queries available here:
+
 
 
 
