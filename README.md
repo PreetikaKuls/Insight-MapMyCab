@@ -3,7 +3,7 @@ This is a data engineering project at Insight Data Science. There are two goals 
 - Provide an API for data scientists and cab dispatchers, for analyzing long term trends in cab behavior w.r.t metrics such as average pickups, dropoffs, occupancy, miles travelled etc.
 - Enable a framework for real-time monitoring of cab locations, so that a user can know the unoccupied cabs across a city and zoom in on a specific neighborhood to spot and catch available cabs nearest to them.
 
-#Data Set:
+#Data Set
 Historical:
 The project is based on historical geolocation data for 500 yellow cabs in San Francisco, collected over a month's time frame. The data is available as a time series, with updates on individual cab occupancy and locations at a time interval of 1 minute (approximately). The following table provides a snap shot of the raw data set (500 text files, each representing one cab):
 
@@ -31,7 +31,11 @@ The resulting table is aggregated using Hive to enable batch queries such as:
 - Day of the week profile of metrics 
 - Individual cab metrics (top 10 cabs with most miles travelled)
 
+Streaming Data
+- The incoming data is filtered in real-time (simulated) based on occupancy to show available cabs
 
+#Pipeline
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/pipeline.png" alt="alt text" width="750" height="400">
 
 
 
