@@ -19,35 +19,36 @@ class firstBolt(SimpleBolt):
         #    log.debug("RECEIVED TICK TUPLE")
          #   self.ack(tup)
          #   return
-        
         result, = tup.values
         
         log.debug("Received tuple " + str(result))
         
         cabID, lat, lng, occ, timestamp = result.split(" ")
-        log.debug("Received this line " + cabID + " " + lat + "  " + lng + " " + occ + " " + timestamp)
         
-        if (occ != '\N'):
+        if (occ != '\N'): # check to ensure that there are no null values 
             if int(occ) == 0:
-                if cabID not in self.unoccCabs:
-                    log.debug("Adding new cab " + cabID)
-                    self.unoccCabs[cabID] = [lat, lng, occ, timestamp]
- 
-                    # metrics = {'lat':lat, 'lng':lng}
-                    # minuteTbl.put('StormData', {'c:' + cabID: json.dumps(metrics)})
-
-                    log.debug(str(self.unoccCabs[cabID]) + " " + cabID + " " + timestamp + " " + occ)
-            elif cabID in self.unoccCabs:
-               log.debug("Deleting " + cabID + " with occ " + occ)
-               del self.unoccCabs[cabID]
-
+                log.debug("Adding new cab " + cabID)
+                self.unoccCabs[cabID] = {'c:lat':lat, 'c:lng':lng}
+            else:
+	       if int(occ) == 1:
+                  log.debug("Found " + cabID + " with occ " + occ)
+                  log.debug("keys", json.dumps(self.unoccCabs.keys()))
+                  if (cabID in self.unoccCabs.keys()):
+                      del self.unoccCabs[cabID]
+                      minuteTbl.delete('StormData', columns=['c:' + cabID])
+                      log.debug("Deleting" + cabID + " with occ " + occ)
         #self.ack(tup)
      
     def process_tick(self):
         cur_cabs = self.unoccCabs
+	colDict = {}
         for key, val in cur_cabs.iteritems():
-            minuteTbl.put('StormData', {'c:' + key: json.dumps(val)})
-        self.unoccCabs = {}
+	    colDict['c:' + key] = json.dumps(val)
+	#log.debug("Storing into HBase", colDict)
+        minuteTbl.put('StormData', colDict)
+        
+        #minuteTbl.put('StormData', {'c:' + key: json.dumps(val)})
+        #self.unoccCabs = {}
              
 
 if __name__ == '__main__':

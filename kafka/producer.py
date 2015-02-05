@@ -20,7 +20,7 @@ def genData(topic):
             key = line.split(" ")[0]
             #print key
             producer.send(topic, key, line.rstrip())
-	    time.sleep(0.5)
+	    time.sleep(0.1)
             count = count + 1
     #producer.stop()
 
