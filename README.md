@@ -14,6 +14,7 @@ The historical data set is played back to simulate real-time behavior.
 
 #Data Processing Framework
 <img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/pipeline.png" alt="alt text" width="600" height="300">
+
 Ingestion (Kafka 0.8.9): The raw data is consumed by a message broker, configured in publish-subscribe mode. Each cab ID is assigned a separate key in order to preserve the temporal ordering of data for each cab. All keys are published into a common topic.
 
 
