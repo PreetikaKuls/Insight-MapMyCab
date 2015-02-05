@@ -5,33 +5,14 @@ This is a data engineering project at Insight Data Science. There are two goals 
 
 #Data Set:
 Historical:
-The project is based on historical geolocation data for 500 yellow cabs in San Francisco, collected over a month's time frame. The data is available as a time series, with updates on individual cab occupancy and locations at a time interval of 1 minute (approximately). The following table provides a snap shot of the raw data set:
-Text file for cabID: "abboip"
-Lat      | Long       |Occ| Timestamp
--------- | ---------- | - | ----------
-37.75134 | -122.39488 | 0 | 1213084687
+The project is based on historical geolocation data for 500 yellow cabs in San Francisco, collected over a month's time frame. The data is available as a time series, with updates on individual cab occupancy and locations at a time interval of 1 minute (approximately). The following table provides a snap shot of the raw data set (500 text files, each representing one cab):
 
-
-First Header | Second Header |
------------- | ------------- |
-37.75134 | -122.39488 | 0 | 1213084687
-Content in the first column | Content in the second column
-
-37.75136 -122.39527 0 1213084659
-37.75199 -122.3946 0 1213084540
-37.7508 -122.39346 0 1213084489
-37.75015 -122.39256 0 1213084237
-37.75454 -122.39227 0 1213084177
-37.75901 -122.3925 0 1213084172
-37.77053 -122.39788 0 1213084092
-37.77669 -122.39382 0 1213084032
-37.78194 -122.38844 0 1213083971
-
-
-
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/raw_data.png" alt="alt text" width="300" height="200">
 
 Real-Time:
 Since at this point, there is no API for obtaining real-time data for the cabs, the historical data set is played back to simulate real-time behavior.
+
+
 
 
 
