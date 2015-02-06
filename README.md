@@ -15,7 +15,7 @@ The historical data set is played back to simulate real-time behavior.
 #Data Processing Framework
 <img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/pipeline.png" alt="alt text" width="600" height="300">
 
-- Ingestion Layer (Kafka 0.8.9): The raw data is consumed by a message broker, configured in publish-subscribe mode. Each cab ID is assigned a separate key in order to preserve the temporal ordering of data for each cab. All keys are published into a common topic.
+- Ingestion Layer (Kafka 0.8.9): The raw data is consumed by a message broker, configured in publish-subscribe mode. Each cab ID is assigned a separate key in order to preserve the temporal ordering of data for each cab (kafka guarantees in order delivery within each partition, and all data for a particular key would reside in one partition). All keys are published into a common topic.
 Related files: kafka_producer.py, kafka_consumer.py
 
 - Batch Layer (HDFS, Hadoop): A kafka consumer stores the data into HDFS. Additional columns are added to the dataset to generate metrics as described in the ensuing section (1.2). This is accomplished using MrJob. Following this, tables representing the aggregate views for serving queries at the user end are generated using Hive.
