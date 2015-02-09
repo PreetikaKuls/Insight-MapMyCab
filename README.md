@@ -46,18 +46,18 @@ Following metrics are computed via a MapReduce operation on the raw dataset (MrJ
 - Pickup events (occupancy change 0 to 1)
 - Drop off events (occupancy change 1 to 0)
 - Miles travelled (based on latitude and longitude)
-- Related files:
+- Related Files: 
 
 The resulting table is aggregated using Hive to enable batch queries such as:
 - Time of day profile of pickups, dropoffs, miles travelled 
 - Day of the week profile of metrics 
-- Related files:
+- Related files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/hive/create_aggregates.q">create_aggregates.q</a> 
 
 The windowing operation in Hive is used for translating the continous time series data (by cab) into tables representing trips and associated durations.  
 - The information pertaining to individual trips is extracted via filtering on pickup and dropoff events
 - Max idle time per day, per cab identifies potential drive shifts (contiguous block of idle time of driver)
 - Average trip times are also calculated
-- Related files:
+- Related files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/hive/create_picks_drops.q">create_picks_drops.q</a>, <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/hive/create_agg_trips.q">create_agg_trips.q</a>, <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/hive/create_trips.q">create_trips.q</a> 
 
 Table below displays the transformed data: tripID (cabID_timestamp), day, month, year, idle time (secs), idle time (hours)
 
@@ -65,7 +65,7 @@ Table below displays the transformed data: tripID (cabID_timestamp), day, month,
 
 Streaming Data
 - The incoming data is filtered in real-time (simulated) based on occupancy to show available cabs.
-- Realed files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/Storm/cab_topology/cab_topology/stormBolt.py">stormBolt.py</a>, <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/Storm/cab_topology/cab_topology.yaml">cab_topology.yaml</a>
+- Related files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/Storm/cab_topology/cab_topology/stormBolt.py">stormBolt.py</a>, <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/Storm/cab_topology/cab_topology.yaml">cab_topology.yaml</a>
  
 
 
