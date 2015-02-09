@@ -10,13 +10,15 @@ source_file = '/home/ec2-user/000000_0'
 
 def genData(topic):
     producer = KeyedProducer(kafka)
-    with open(source_file) as f:
-	count = 0
-        for line in f:
-            print "SENDING LINE: " + str(count) + " : " + line 
-            key = line.split(" ")[0]
-            producer.send(topic, key, line.rstrip()) 
-	    time.sleep(0.1)  # Creating some delay to allow proper rendering of the cab locations on the map
-            count = count + 1
+    while True:
+        with open(source_file) as f:
+	    count = 0
+            for line in f:
+               # print "SENDING LINE: " + str(count) + " : " + line 
+                key = line.split(" ")[0]
+                producer.send(topic, key, line.rstrip()) 
+	        time.sleep(0.1)  # Creating some delay to allow proper rendering of the cab locations on the map
+                count = count + 1
+        source_file.close()
 
 genData("CabData")
