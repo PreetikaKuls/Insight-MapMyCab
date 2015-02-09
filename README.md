@@ -7,6 +7,8 @@ This is a data engineering project at Insight Data Science. There are two goals 
 Historical:
 The project is based on historical geolocation data for 500 yellow cabs in San Francisco, collected over a month's time frame. The data is available as a time series, with updates on individual cab occupancy and locations at a time interval of 1 minute (approximately). The following table provides a snap shot of the raw data set (500 text files, each representing one cab):
 
+cabID, lat, long, occucpancy, timestamp
+
 <img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/raw_data.png" alt="alt text" width="300" height="200">
 
 Real-Time:
@@ -48,19 +50,25 @@ Following metrics are computed via a MapReduce operation on the raw dataset (MrJ
 The resulting table is aggregated using Hive to enable batch queries such as:
 - Time of day profile of pickups, dropoffs, miles travelled 
 - Day of the week profile of metrics 
-- Individual cab metrics (top 10 cabs with most miles travelled)
+
+The windowing operation in Hive is used for translating the continous time series data (by cab) into tables representing trips and associated durations.  
+- The information pertaining to individual trips is extracted via filtering on pickup and dropoff events
+- Max idle time per day, per cab identifies potential drive shifts (contiguous block of idle time of driver)
+- Average trip times are also calculated
+
+Table below displays the transformed data: tripID (cabID_timestamp), day, month, year, idle time (secs), idle time (hours)
+
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/triptable.png" alt="alt text" width="500" height="250">
 
 Streaming Data
-- The incoming data is filtered in real-time (simulated) based on occupancy to show available cabs
-
+- The incoming data is filtered in real-time (simulated) based on occupancy to show available cabs.
  
 
 
 
-
 #Live Demo:
-A Live Demo of the project is available here:
-Charts from sample batch queries available here:
+A Live Demo of the project is available here: www.mapmycab.org:5000/
+
 
 
 
