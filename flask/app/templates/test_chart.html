@@ -24,9 +24,9 @@ $(function () {
         var occ = {{ occ|safe }}
 
         $('#p_container').highcharts({
-        chart: {
-            type: 'bar'
-        },
+//        chart: {
+ //           type: 'column'
+ //       },
         title: {
             text: topic
         },
@@ -38,6 +38,30 @@ $(function () {
                 text: topic
             }
         },
+        plotOptions: {
+            series: {
+                cursor: 'pointer',
+                point: {
+                    events:{
+                        click: function(e) {
+                            hs.htmlExpand(null, {
+                                pageOrigin: {
+                                    x: e.pageX || e.clientX,
+                                    y: e.pageY || e.clientY
+                                },
+                                headingText: this.series.name,
+                                maincontentText: this.x + ':<br/>' + this.y,
+                                width: 200
+                            });
+                        }
+                    }
+                },
+                marker: {
+                    lineWidth: 1
+                }
+            }
+         },
+
         series: [
 	{
             name: 'Total Pickups',
@@ -51,7 +75,7 @@ $(function () {
     });      
         $('#d_container').highcharts({
         chart: {
-            type: 'bar'
+            type: 'column'
         },
         title: {
             text: topic
