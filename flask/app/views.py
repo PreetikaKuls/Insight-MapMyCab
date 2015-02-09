@@ -27,7 +27,7 @@ def refresh():
 
 @app.route('/maps')
 def maps():
-    return render_template('map.html')
+    return render_template('map_copy.html')
 
 
 @app.route('/locations')
@@ -66,13 +66,13 @@ def doworder():
 	pickups, dropoffs, occ, dist = ([] for i in range(4))
 	for i, day in enumerate(keys):
 		row = table.row('2008_5_'+day)
-		print day, row
+	#	print day, row
                 cellval = json.loads(row['c:Totals'])
                 pickups.append(cellval['TPickups']/totalCabs)
                 dropoffs.append(cellval['TDropoffs']/totalCabs)
                 occ.append(cellval['Avocc']*100.0)
                 dist.append(cellval['Avdist']/totalCabs)		
-        print keys, pickups, dropoffs, dist, occ
+       # print keys, pickups, dropoffs, dist, occ
         return render_template('test_chart.html', topic=json.dumps('Cab Metrics by Day of Week'), keys=json.dumps(keys), distances=json.dumps(dist), pickups=json.dumps(pickups), dropoffs =json.dumps(dropoffs), occ=json.dumps(occ))
 
 
@@ -109,7 +109,7 @@ def hodorder(day):
                 if(col == 'c:Totals'):
                 	continue
 		hour = int(col.split(':')[1])
-		print hour
+	#	print hour
 		cellval = json.loads(cols[col])
 		results[hour]['pickups'] = float(cellval['pickups'])/totalCabs
                 results[hour]['dropoffs'] = float(cellval['dropoffs'])/totalCabs
@@ -122,7 +122,7 @@ def hodorder(day):
                 dropoffs.append(v['dropoffs'])
                 occ.append(v['occ'])
 		dist.append(v['dist'])
-        print keys, pickups, dropoffs, dist, occ
+       # print keys, pickups, dropoffs, dist, occ
         return render_template('test_chart.html', topic=json.dumps('Cab Metrics by Hour of Day'), keys=json.dumps(keys), distances=json.dumps(dist), pickups=json.dumps(pickups), dropoffs =json.dumps(dropoffs), occ=json.dumps(occ))
 
 
