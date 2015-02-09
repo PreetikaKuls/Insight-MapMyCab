@@ -1,4 +1,4 @@
-import logging
+#import logging
 from pyleus.storm import SimpleBolt
 import happybase
 import json
@@ -6,7 +6,7 @@ import json
 connection = happybase.Connection('54.67.126.144') #Running HBase, thrift this will be run by supervisor
 
 minuteTbl = connection.table('avlbl_Cabs')
-log = logging.getLogger('test')
+#log = logging.getLogger('test')
 
 class firstBolt(SimpleBolt):
     OUTPUT_FIELDS = ['test']
@@ -21,22 +21,22 @@ class firstBolt(SimpleBolt):
          #   return
         result, = tup.values
         
-        log.debug("Received tuple " + str(result))
+       # log.debug("Received tuple " + str(result))
         
         cabID, lat, lng, occ, timestamp = result.split(" ")
         
         if (occ != '\N'): # check to ensure that there are no null values 
             if int(occ) == 0:
-                log.debug("Adding new cab " + cabID)
+               # log.debug("Adding new cab " + cabID)
                 self.unoccCabs[cabID] = {'c:lat':lat, 'c:lng':lng}
             else:
 	       if int(occ) == 1:
-                  log.debug("Found " + cabID + " with occ " + occ)
-                  log.debug("keys", json.dumps(self.unoccCabs.keys()))
+                #  log.debug("Found " + cabID + " with occ " + occ)
+                #  log.debug("keys", json.dumps(self.unoccCabs.keys()))
                   if (cabID in self.unoccCabs.keys()):
                       del self.unoccCabs[cabID]
                       minuteTbl.delete('StormData', columns=['c:' + cabID])
-                      log.debug("Deleting" + cabID + " with occ " + occ)
+                 #     log.debug("Deleting" + cabID + " with occ " + occ)
         #self.ack(tup)
      
     def process_tick(self):
@@ -52,11 +52,11 @@ class firstBolt(SimpleBolt):
              
 
 if __name__ == '__main__':
-    logging.basicConfig(
-        level=logging.DEBUG,
-        filename='/home/ec2-user/test_pyleus_log.log',
-        format="%(message)s",
-        filemode='a',
-    )
+  #  logging.basicConfig(
+    #    level=logging.DEBUG,
+   #     filename='/home/ec2-user/test_pyleus_log.log',
+    #    format="%(message)s",
+    #    filemode='a',
+   # )
     firstBolt().run()
 
