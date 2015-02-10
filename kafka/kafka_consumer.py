@@ -1,34 +1,20 @@
+# This program implements a kafka consumer that stores a data stream to HDFS. It is subscribed to one topic (all cab data). 
 import os
 import sys
-from kafka import KafkaClient, KeyedProducer, SimpleConsumer
+from kafka import KafkaClient, SimpleConsumer
 from datetime import datetime
-#from docopt import docopt
 
 kafka = KafkaClient("localhost:9092")
-source_file = '/home/ubuntu/sortedData.txt'
+source_file = '/home/ubuntu/data/cabDatabase.txt'
 tempfile_path = None
 tempfile = None
 batch_counter = 0
 timestamp = None
-"""
-def genData(topic):
-    producer = KeyedProducer(kafka)
-    with open(source_file) as f:
-        for line in f:
-            print "sending line"
-            key = line.split(" ")[0]
-            producer.send(topic, key, line.rstrip())
-    #producer.stop()
-# def get_topics(zookeeper_hosts, topic_regex):
-#     Uses shell zookeeper-client to read Kafka topics matching topic_regex from ZooKeeper."""
-#     command        = "/usr/bin/zookeeper-client -server %s ls /brokers/topics | tail -n 1 | tr '[],' '   '" % ','.join(zookeeper_hosts)
-#     topics         = os.popen(command).read().strip().split()
-#     matched_topics = [ topic for topic in topics if re.match(topic_regex, topic) ]
-#     return matched_topics
 
+# Function to return timestamp in order to generate timestamped names for storage in HDFS
 def standardized_timestamp(frequency, dt=None):
     if dt is None:
-      dt = datetime.now() 
+      dt = datetime.now()
 
     frequency = int(frequency)
     # Special case were frequency=0 so we only return the date component
@@ -46,48 +32,45 @@ def standardized_timestamp(frequency, dt=None):
 
     return timestamp.strftime('%Y%m%d%H%M%S')
 
+# Function to store data into HDFS 
 def flush_to_hdfs(output_dir, topic):
     global tempfile_path, tempfile, batch_counter
-    tempfile.close()
+   tempfile.close()
     hadoop_dir = "%s/%s" % (output_dir, topic)
     hadoop_path = hadoop_dir + "/%s_%s.txt" % (timestamp, batch_counter)
     print "/usr/bin/hdfs dfs -mkdir %s" % hadoop_dir
-    os.system("/usr/bin/hdfs dfs -mkdir %s" % hadoop_dir)
+    os.system("/usr/bin/hdfs dfs -mkdir %s" % hadoop_dir)     # Issue command to create a directory
     print "/usr/bin/hdfs dfs -put -f %s %s" % (tempfile_path, hadoop_path)
-    os.system("/usr/bin/hdfs dfs -put -f %s %s" % (tempfile_path, hadoop_path))
+    os.system("/usr/bin/hdfs dfs -put -f %s %s" % (tempfile_path, hadoop_path))  # Store newly generated file
     os.remove(tempfile_path)
     batch_counter += 1
-    tempfile_path = "/tmp/kafka_%s_%s_%s_%s.txt" % (topic, group, timestamp, batch_counter)
+    tempfile_path = "/tmp/kafka_%s_%s_%s_%s.txt" % (topic, group, timestamp, batch_counter) # identify file by the group, topic and timestamp
     tempfile = open(tempfile_path,"w")
 
+# Function for storing data from the producer into a temporary file (which is later stored to HDFS through another function call) 
 def consume_topic(topic, group, output_dir, frequency):
     global timestamp, tempfile_path, tempfile
     print "Consumer Loading topic '%s' in consumer group %s into %s..." % (topic, group, output_dir)
-    #get timestamp
     timestamp = standardized_timestamp(frequency)
     kafka_consumer = SimpleConsumer(kafka, group, topic, max_buffer_size=1310720000)
-    
+
     #open file for writing
     tempfile_path = "/tmp/kafka_%s_%s_%s_%s.txt" % (topic, group, timestamp, batch_counter)
     tempfile = open(tempfile_path,"w")
     log_has_at_least_one = False #did we log at least one entry?
     while True:
-        messages = kafka_consumer.get_messages(count=100, block=False) #get 5000 messages at a time, non blocking
+        messages = kafka_consumer.get_messages(count=1000, block=False) #get 1000 messages at a time, non blocking
         if not messages:
             print "no messages to read"
-            continue
-        for message in messages: #OffsetAndMessage(offset=43, message=Message(magic=0, attributes=0, key=None, value='some message'))
+            continue   # If no messages are received, wait until there are more
+        for message in messages:
             log_has_at_least_one = True
             #print(message.message.value)
             tempfile.write(message.message.value + "\n")
         if tempfile.tell() > 10000000: #file size > 10MB
             flush_to_hdfs(output_dir, topic)
-        kafka_consumer.commit() #save position in the kafka queue
-    #exit loop
-    if log_has_at_least_one:
-        flush_to_hdfs(output_dir, topic)
-    kafka_consumer.commit() #save position in the kafka queue
-    return 0
+        kafka_consumer.commit() # inform zookeeper of position in the kafka queue
+    # 
 
 if __name__ == '__main__':
     group = "batchStore"
@@ -96,7 +79,5 @@ if __name__ == '__main__':
     frequency = "1"
 
     print "\nConsuming topic: [%s] into HDFS" % topic
-    #genData(topic)
     consume_topic(topic, group, output, frequency)
-    #kafka.close()
-    #sys.exit(0)
+                                                     
