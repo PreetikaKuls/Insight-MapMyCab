@@ -20,11 +20,8 @@ statsTbl = connection.table('dow_stats')
 
 for key, data in master_table.scan():
     metrics = {'pickups': data['c:pickups'], 'dropoffs': data['c:dropoffs'], 'occ': data['c:occ'], 'dist': data['c:distance']}
-    #print metrics
     new_key = key.split('-')[0]
-    #print new_key 
     statsTbl.put(new_key, {'c:' + data['c:hour']: json.dumps(metrics)}) 
-#   print key, data['c:distance']
 
 # Scan the aggregate table to store the sums as the last column for fast retrieval
 for key, val in statsTbl.scan():
