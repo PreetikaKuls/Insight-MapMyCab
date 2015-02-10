@@ -45,13 +45,13 @@ function disp_charts(data) {
         },
         series: [
 	    {
-		name: 'Total Pickups',
+		name: 'Total Pickups Per Cab',
 		data: pickups
             } , 
-	    {
-		name: 'Total Dropoffs',
-		data: dropoffs
-	    }
+	   // {
+	    //  name: 'Total Dropoffs',
+            //  data: dropoffs
+           // }
         ]
     });      
     $('#d_container').highcharts({
@@ -71,11 +71,11 @@ function disp_charts(data) {
         },
         series: [
             {
-            name: 'Avg Distance',
+            name: 'Avg Distance Per Cab',
 		data: distances
             },
             {
-		name: 'Avg Occupancy',        
+		name: 'Avg Occupancy Per Cab',        
 		data: occ
         }]
     });      

@@ -48,10 +48,10 @@ def doworder():
         for i, day in enumerate(keys):
 		row = table.row('2008_5_'+ day)
                 cellval = json.loads(row['c:Totals'])
-                pickups.append(cellval['TPickups']/totalCabs)
+                pickups.append(round(cellval['TPickups']/totalCabs, 2))
                 dropoffs.append(cellval['TDropoffs']/totalCabs)
-                occ.append(cellval['Avocc']*100.0)
-                dist.append(cellval['Avdist']/totalCabs)
+                occ.append(round(cellval['Avocc']*100.0,2))
+                dist.append(round(cellval['Avdist']/totalCabs,2))
         items={'pickups':pickups, 'dropoffs':dropoffs, 'occ':occ, 'distances':dist, 'topic':'Cab Metrics By Day of Week', 'keys':keys}	
         return jsonify(items=items) 
        
@@ -61,17 +61,17 @@ def hodorder(day):
         table = hbase.table('dow_stats')
 
 	results = [{} for x in range(24)]
-	totalCabs = 500
-	cols = table.row('2008_5_'+day)
+	totalCabs = 500.0
+	cols = table.row('2008_5_'+ day)
 	for col in cols:
                 if(col == 'c:Totals'):
                 	continue
 		hour = int(col.split(':')[1])
 		cellval = json.loads(cols[col])
-		results[hour]['pickups'] = float(cellval['pickups'])/totalCabs
-                results[hour]['dropoffs'] = float(cellval['dropoffs'])/totalCabs
-                results[hour]['occ'] = float(cellval['occ'])*100
-                results[hour]['dist'] = float(cellval['dist'])/totalCabs
+		results[hour]['pickups'] = round(float(cellval['pickups'])/totalCabs, 2)
+                results[hour]['dropoffs'] = round(float(cellval['dropoffs'])/totalCabs, 2)
+                results[hour]['occ'] = round(float(cellval['occ'])*100, 2)
+                results[hour]['dist'] = round(float(cellval['dist'])/totalCabs, 2)
  	keys, pickups, dropoffs, occ, dist = ([] for i in range(5))
 	for i, v in enumerate(results):
 		keys.append(i)
