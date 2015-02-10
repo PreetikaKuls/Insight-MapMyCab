@@ -1,0 +1,77 @@
+<!DOCTYPE html> 
+<html>
+
+<head>
+  <title>Map My Cab</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="static/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="static/modernizr-1.5.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+   <script src="http://code.highcharts.com/stock/highstock.src.js"></script>
+   <script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
+   <script src="static/batch.js"></script>
+</head>
+
+<body>
+<div id="main">
+  <header>
+    <div id="strapline">
+      <div id="welcome_slogan">
+	<h3>Map My Cab</h3>
+      </div><!--close welcome_slogan-->
+    </div><!--close strapline-->	  
+    <nav>
+      <div id="menubar">
+        <ul id="nav">
+          <li><a href="/">Home</a></li>
+          <li class="current"><a href="/batch">Batch Analysis</a></li>
+          <li><a href="/downloaddata">Download Data</a></li>
+          <li><a href="/aboutme">Slide Deck</a></li>
+        </ul>
+      </div><!--close menubar-->	
+    </nav>
+  </header>
+    
+  <div id="site_content">
+    <div id="select-container">
+      <h2 style="font:80%">Select a Day of week </h2>
+      <div class="styled-select">
+	<select name="dayselector" onchange="var val = this.options[this.selectedIndex].value; if (val == 'Agg') { $.getJSON('/doworder', disp_charts)} else {$.getJSON('/hodorder'+'/'+val, disp_charts)}">
+	  <option value="Agg">Aggregate</option>
+	  <option value="Mon">Monday</option> 
+	  <option value="Tue">Tuesday</option>
+	  <option value="Wed">Wednesday</option>
+	  <option value="Thu">Thursday</option>
+	  <option value="Fri">Friday</option>
+	  <option value="Sat">Saturday</option>
+	  <option value="Sun">Sunday</option>
+	</select>
+        <br>
+      </div>
+    </div>
+    <h2 style="font:80%">Pickups and Dropoffs</h2>
+    <div id="p_container"></div>                
+    <h2 style="font:80%">Distance and Occupancy</h2>
+    <div id="d_container"></div>
+    <div id="content">
+      <div class="content_item">
+	<footer>
+	  <span style="float: left; color:#FFF">
+	    &nbsp&nbsp&nbsp&nbsp Preetika Kulshrestha
+	  </span> 
+	  <span style="float: right; color:#FFF">
+	    <a href="mailto:preetika.kulshrestha@gmail.com">Email</a>     |
+	    <a href="https://github.com/PreetikaKuls">Github</a>     |
+            <a href="https://www.linkedin.com/in/preetikakulshrestha">Linkedin</a>&nbsp&nbsp&nbsp&nbsp
+	  </span>
+	</footer>
+      </div><!--close content-->   
+  </div><!--close site_content-->  	
+  
+</div><!--close main-->
+
+</body>
+</html>

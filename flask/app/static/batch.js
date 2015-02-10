@@ -1,32 +1,14 @@
-<html>
-<head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="http://code.highcharts.com/stock/highstock.src.js"></script>
-    <script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
-</head>
- 
-              
-<body>
-    <div id="p_container" style="height: 450px; min-width: 310px"></div>                
-    <div id="d_container" style="height: 450px; min-width: 310px"></div>
+// Display the historical charts populated by queries
 
-</body>
-
-
- <script>
-/////////////
-$(function () {
-	var topic = {{ topic|safe }}
-	var keys = {{ keys|safe }}	
-        var distances = {{ distances|safe }}
-        var pickups = {{ pickups|safe }}
-        var dropoffs = {{ dropoffs|safe }}
-        var occ = {{ occ|safe }}
-
-        $('#p_container').highcharts({
-//        chart: {
- //           type: 'column'
- //       },
+function disp_charts(data) { 
+   items = data.items
+   var topic = items.topic
+   var keys = items.keys
+   var distances = items.distances
+   var pickups = items.pickups
+   var dropoffs = items.dropoffs
+   var occ = items.occ
+    $('#p_container').highcharts({
         title: {
             text: topic
         },
@@ -60,20 +42,19 @@ $(function () {
                     lineWidth: 1
                 }
             }
-         },
-
+        },
         series: [
-	{
-            name: 'Total Pickups',
-            data: pickups
-        } , 
-	{
-            name: 'Total Dropoffs',
-            data: dropoffs
-	}
+	    {
+		name: 'Total Pickups',
+		data: pickups
+            } , 
+	    {
+		name: 'Total Dropoffs',
+		data: dropoffs
+	    }
         ]
     });      
-        $('#d_container').highcharts({
+    $('#d_container').highcharts({
         chart: {
             type: 'column'
         },
@@ -89,18 +70,15 @@ $(function () {
             }
         },
         series: [
-        {
+            {
             name: 'Avg Distance',
-            data: distances
-        },
-        {
-            name: 'Avg Occupancy',        
-            data: occ
+		data: distances
+            },
+            {
+		name: 'Avg Occupancy',        
+		data: occ
         }]
     });      
+}
 
-
-});
-</script>
- 
-</html>
+$.getJSON('/doworder', disp_charts);

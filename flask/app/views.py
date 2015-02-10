@@ -1,3 +1,4 @@
+# Create views for the html page
 from app import app
 import json
 import time
@@ -8,53 +9,33 @@ import ast
 @app.route('/')
 @app.route('/index')
 def index():
-    return "Hello World!"
-
-@app.route('/test_chart')
-def test_chart():
-	return render_template('test_chart.html')
-
-from random import randint
-
-@app.route('/numbers', methods = ['GET'])
-def numbers():
-    num = randint(0, 10)
-    return jsonify(num=num)
-
-@app.route('/refresh')
-def refresh():
-    return render_template('refresh.html')
+    return render_template('index.html')
 
 @app.route('/maps')
 def maps():
-    return render_template('map_copy.html')
+    return render_template('index.html')
 
+@app.route('/batch')
+def batch():
+    return render_template('batch.html')
 
-@app.route('/locations')
-def locations():
+@app.route('/downloaddata')
+def downloaddata():
+    return render_template('downloaddata.html')
 
-    cabs = [{"name": "Cab A", "lat": 52.511467 + randint(5, 10), "lng": 13.447179 + randint(5, 10)},
-            {"name": "Cab B", "lat": 52.549061 + randint(5, 10), "lng": 13.422975 + randint(5, 10)},
-            {"name": "Cab C", "lat": 52.497622 + randint(5, 10), "lng": 13.396110 + randint(5, 10)},
-            {"name": "Cab D", "lat": 52.517683 + randint(5, 10), "lng": 13.394393 + randint(5, 10)}]
+@app.route('/aboutme')
+def aboutme():
+    return render_template('aboutme.html')
 
-
-    reflat, reflong = 52.511467 + (randint(5, 10)), 13.447179 + (randint(5,10))
-    return jsonify(reflat=reflat, reflng=reflong, cabs=cabs)
-    
-@app.route('/test')
-def test():
+@app.route('/realtime')
+def realtime():
     conn = happybase.Connection('54.67.126.144')
     table = conn.table('avlbl_Cabs')
     row = table.row('StormData')
-    #row = dict(table.rows('StormData'))
     cabs = []
     for key, val in row.iteritems():
 	dval = json.loads(val)
 	cabs.append({'name':key.split(':')[1], 'lat': dval['c:lat'], 'lng': dval['c:lng']})
-        #print key, val
-    #    print json.dumps(val)
-#    print cabs
     return jsonify(cabs=cabs)
 
 @app.route('/doworder')
@@ -64,39 +45,16 @@ def doworder():
 	keys = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 	totalCabs = 500.0
 	pickups, dropoffs, occ, dist = ([] for i in range(4))
-	for i, day in enumerate(keys):
-		row = table.row('2008_5_'+day)
-	#	print day, row
+        for i, day in enumerate(keys):
+		row = table.row('2008_5_'+ day)
                 cellval = json.loads(row['c:Totals'])
                 pickups.append(cellval['TPickups']/totalCabs)
                 dropoffs.append(cellval['TDropoffs']/totalCabs)
                 occ.append(cellval['Avocc']*100.0)
-                dist.append(cellval['Avdist']/totalCabs)		
-       # print keys, pickups, dropoffs, dist, occ
-        return render_template('test_chart.html', topic=json.dumps('Cab Metrics by Day of Week'), keys=json.dumps(keys), distances=json.dumps(dist), pickups=json.dumps(pickups), dropoffs =json.dumps(dropoffs), occ=json.dumps(occ))
-
-
-@app.route('/hod/<day>')
-def hod(day):
-	hbase = happybase.Connection('54.215.177.124')
-	table = hbase.table('dow_stats')
-       	rows = table.scan()
-        keys, pickups, dropoffs, occ, dist = ([] for i in range(5))
-        for key, val in rows:
-             year, mon, dow = key.split('_')
-             if day == dow and mon == '5':
-  		for col in val:
-                        if(col == 'c:Totals'):
-				continue
-              		keys.append(col)
-           		cellval = json.loads(val[col])
-                        pickups.append(float(cellval['pickups']))
-                        dropoffs.append(float(cellval['dropoffs']))
-                        occ.append(float(cellval['occ']))
-                        dist.append(float(cellval['dist']))
-        print pickups, dropoffs, dist, occ
-        return render_template('test_chart.html', keys=json.dumps(keys), distances=json.dumps(dist), pickups=json.dumps(pickups), dropoffs =json.dumps(dropoffs), occ=json.dumps(occ))
-
+                dist.append(cellval['Avdist']/totalCabs)
+        items={'pickups':pickups, 'dropoffs':dropoffs, 'occ':occ, 'distances':dist, 'topic':'Cab Metrics By Day of Week', 'keys':keys}	
+        return jsonify(items=items) 
+       
 @app.route('/hodorder/<day>')
 def hodorder(day):
         hbase = happybase.Connection('54.215.177.124')
@@ -109,7 +67,6 @@ def hodorder(day):
                 if(col == 'c:Totals'):
                 	continue
 		hour = int(col.split(':')[1])
-	#	print hour
 		cellval = json.loads(cols[col])
 		results[hour]['pickups'] = float(cellval['pickups'])/totalCabs
                 results[hour]['dropoffs'] = float(cellval['dropoffs'])/totalCabs
@@ -122,24 +79,5 @@ def hodorder(day):
                 dropoffs.append(v['dropoffs'])
                 occ.append(v['occ'])
 		dist.append(v['dist'])
-       # print keys, pickups, dropoffs, dist, occ
-        return render_template('test_chart.html', topic=json.dumps('Cab Metrics by Hour of Day'), keys=json.dumps(keys), distances=json.dumps(dist), pickups=json.dumps(pickups), dropoffs =json.dumps(dropoffs), occ=json.dumps(occ))
-
-
-@app.route('/dow/<month>')
-def dow(month):
-        hbase = happybase.Connection('54.215.177.24')
-        table = hbase.table('dow_stats')
-        rows = table.scan()
-        keys, pickups, dropoffs, occ, dist = ([] for i in range(5))
-        for key, val in rows:
-                year, mon, dow = key.split('_')
-                if mon == month:
-                        keys.append(dow)
-                        cellval = json.loads(val['c:Totals'])
-                        pickups.append(cellval['TPickups'])
-                        dropoffs.append(cellval['TDropoffs'])
-                        occ.append(cellval['Avocc'])
-                        dist.append(cellval['Avdist'])
-        print pickups, dropoffs, dist, occ
-        return render_template('test_chart.html', keys=json.dumps(keys), distances=json.dumps(dist), pickups=json.dumps(pickups), dropoffs =json.dumps(dropoffs), occ=json.dumps(occ))	
+        items = {'topic':'Cab Metrics by Hour of Day for ' + day, 'keys':keys, 'distances':dist, 'pickups':pickups, 'dropoffs':dropoffs, 'occ':occ}
+	return jsonify(items=items)

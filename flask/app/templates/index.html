@@ -1,0 +1,72 @@
+<!DOCTYPE html> 
+<html>
+
+<head>
+  <title>Map My Cab</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="static/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="static/modernizr-1.5.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true">
+  </script>
+  <script src="static/map.js"></script>
+</head>
+
+<body>
+<div id="main">
+  <header>
+    <div id="strapline">
+      <div id="welcome_slogan">
+	<h3>Map My Cab</h3>
+      </div><!--close welcome_slogan-->
+    </div><!--close strapline-->	  
+    <nav>
+      <div id="menubar">
+        <ul id="nav">
+          <li class="current"><a href="/">Home</a></li>
+          <li><a href="/batch">Batch Analysis</a></li>
+          <li><a href="/downloaddata">Download Data</a></li>
+          <li><a href="/aboutme">Slide Deck</a></li>
+        </ul>
+      </div><!--close menubar-->	
+    </nav>
+  </header>    
+  
+  <div id="site_content">
+    <div class="content_item">
+	<h3>A simulated real-time feed of geolocation data from San Francisco yellow cabs</h3> 
+      </div><!--close content-->
+    <div id="map-container">
+       <div id="map-canvas"></div>
+    </div>
+    <div id="content">
+      <div class="content_item">
+    	<p style="text-align:justify">The above map displays a simulated real time stream of geolocation data from 500 cabs in San Francisco. The stream is being played back in real time, based on historical geolocation data. A stream processing framework (Apache Storm)
+           is used for transforming streaming data such that only the unoccupied cabs are displayed on the map. The goal of this app is to showcase
+           a framework enabling a user to view real time cab status in order to catch an empty cab in their neighborhood by utilizing the locational 
+           data being constantly updated on the map. Further information available on the subsequent tabs and github.</p>
+      </div>
+
+	<div class="content_item">
+	 <footer>
+	  <span style="float: left; color:#FFF">
+	    &nbsp&nbsp&nbsp&nbsp Preetika Kulshrestha
+	  </span> 
+	  <span style="float: right; color:#FFF">
+	    <a href="mailto:preetika.kulshrestha@gmail.com">Email</a>     |
+	    <a href="https://github.com/PreetikaKuls">Github</a>     |
+            <a href="https://www.linkedin.com/in/preetikakulshrestha">Linkedin</a>&nbsp&nbsp&nbsp&nbsp
+	  </span>
+	</footer>
+	</div>
+      </div><!--close content-->   
+  </div><!--close site_content-->  	
+  
+</div><!--close main-->
+
+</body>
+u</html>
