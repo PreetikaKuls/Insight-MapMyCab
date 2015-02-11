@@ -71,7 +71,7 @@ Streaming Data
 
 
 #Live Demo:
-A Live Demo of the project is available here: www.mapmycab.org:5000/
+A Live Demo of the project is available here: www.mapmycab.org
 
 
 
