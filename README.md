@@ -50,7 +50,7 @@ The windowing operation in Hive is used for translating the continous time serie
 
 Table below displays the transformed data: tripID (cabID_timestamp), day, month, year, idle time (secs), idle time (hours)
 
-<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/triptable.png" alt="alt text" width="500" height="250">
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/triptable.png" alt="alt text" width="400" height="250">
 
 Hive Workflow:
 
