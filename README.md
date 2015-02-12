@@ -17,7 +17,9 @@ The historical data set is played back to simulate real-time behavior.
 #Data Processing Framework
 <img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/pipeline.png" alt="alt text" width="600" height="300">
 
-- Ingestion Layer (Kafka): The raw data is consumed by a message broker, configured in publish-subscribe mode. Each cab ID is assigned a separate key in order to preserve the temporal ordering of data for each cab (kafka guarantees in order delivery within each partition, and all data for a particular key would reside in one partition). All keys are published into a common topic. Related files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/kafka/producer.py">producer.py</a>, <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/kafka/kafka_consumer.py">kafka_consumer.py</a>.
+- Ingestion Layer (Kafka): The raw data is consumed by a message broker, configured in publish-subscribe mode. 
+  - Each cab ID is assigned a separate key in order to preserve the temporal ordering of data for each cab (kafka guarantees in order delivery within each partition, and all data for a particular key would reside in one partition). 
+  - All keys are published into a common topic. Related files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/kafka/producer.py">producer.py</a>, <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/kafka/kafka_consumer.py">kafka_consumer.py</a>.
 
 - Batch Layer (HDFS, Hadoop): A kafka consumer stores the data into HDFS. Additional columns are added to the dataset to generate metrics as described in the ensuing section. This is accomplished using Hive (and MrJob). Following this, tables representing the aggregate views for serving queries at the user end are generated using Hive.
 
@@ -54,6 +56,17 @@ Hive Workflow:
 
 <img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/hiveworkflow.png" alt="alt text" width="600" height="350">
 
+#Schemas
+
+Batch Schema:
+The key for batch storage is organized as yyyy_month_dayofweek. Each column represents an hour and the cells contain metrics for the hour. An additional column stores aggregate metrics for the whole day. This allows the same table to service two types of queries: hour of day and day of week profiles.
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/batchschema.png" alt="alt text" width="600" height="250">
+
+Realtime Schema:
+The realtime schema represents a city for each row (since there is only one city for the current data base, it has one row). The columns represent cabID (the ones that are available as filtered by Storm). The cells contain latitude longitude data.
+
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/realtimeschema.png" alt="alt text" width="600" height="250">
+
 Streaming Data
 - The incoming data is filtered in real-time (simulated) based on occupancy to show available cabs.
 - Related files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/Storm/cab_topology/cab_topology/stormBolt.py">stormBolt.py</a>, <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/Storm/cab_topology/cab_topology.yaml">cab_topology.yaml</a>
@@ -63,11 +76,32 @@ A Live Demo of the project is available here: www.mapmycab.org
 A snap shot of the map with cabs:
 
 
-<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/realtime.png" alt="alt text" width="500" height="300">
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/realtime.png" alt="alt text" width="500" height="250">
 
 #Presentation Deck
 The presentation slides are available here:
 www.mapmycab.org/aboutme
+
+#Instructions to Run this Pipeline
+
+Install python packages:
+```sudo pip install kafka-python happybase pyleus mrjob```
+
+Run the Kafka producer / consumer:
+```python kafka/producer.py```
+```python kafka/kafka_consumer.py```
+
+Run MrJob:
+```python mr_hourly_job.py -r hadoop --hadoop-bin /usr/bin/hadoop hdfs:///<input file path> -o <output file path>```
+
+Run Hive Scripts
+```hive -f <filename>```
+
+Build storm topology:
+```pyleus build cab_topology.yaml```
+
+Submit pyleus topology:
+```pyleus submit -n 54.153.51.200 cab_topology.jar```
 
 
 
