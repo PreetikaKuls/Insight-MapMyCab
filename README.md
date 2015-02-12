@@ -5,7 +5,7 @@ This is a data engineering project at Insight Data Science. There are two goals 
 
 #Data Set
 Historical:
-The project is based on historical geolocation data for 500 yellow cabs in San Francisco, collected over a month's time frame. The data is available as a time series, with updates on individual cab occupancy and locations at a time interval of 1 minute (approximately). The following table provides a snap shot of the raw data set (500 text files, each representing one cab):
+The project is based on historical geolocation data for 500 yellow cabs in San Francisco, collected over a month's time frame (**11 million rows**). The data is available as a time series, with updates on individual cab occupancy and locations at a time interval of 1 minute (approximately). The following table provides a snap shot of the raw data set (500 text files, each representing one cab):
 
 cabID, lat, long, occucpancy, timestamp
 
@@ -54,7 +54,7 @@ The resulting table is aggregated using Hive to enable batch queries such as:
 - Related files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/hive/create_aggregates.q">create_aggregates.q</a> 
 
 The windowing operation in Hive is used for translating the continous time series data (by cab) into tables representing trips and associated durations.  
-- The information pertaining to individual trips is extracted via filtering on pickup and dropoff events
+- The information pertaining to individual trips is extracted via filtering on pickup and dropoff events (**1 million trips**)
 - Max idle time per day, per cab identifies potential drive shifts (contiguous block of idle time of driver)
 - Average trip times are also calculated
 - Related files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/hive/create_picks_drops.q">create_picks_drops.q</a>, <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/hive/create_agg_trips.q">create_agg_trips.q</a>, <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/hive/create_trips.q">create_trips.q</a> 
