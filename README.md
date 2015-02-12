@@ -31,15 +31,14 @@ The historical data set is played back to simulate real-time behavior.
 
 #Data Transformations
 Following metrics are computed via a MapReduce operation on the raw dataset (MrJob):
-- Pickup events (occupancy change 0 to 1)
-- Drop off events (occupancy change 1 to 0)
 - Miles travelled (based on latitude and longitude)
-- Related Files: 
+- Related Files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/hive/create_aggregates.q">create_aggregates.q</a> 
 
 The resulting table is aggregated using Hive to enable batch queries such as:
 - Time of day profile of pickups, dropoffs, miles travelled 
 - Day of the week profile of metrics 
-- Related files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/hive/create_aggregates.q">create_aggregates.q</a> 
+- Related files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/MrJob/mr_hourly_job.py">mr_hourly_job.py</a> 
+- Some additional metrics calculated via hive: Pickup and Dropoff events
 
 The windowing operation in Hive is used for translating the continous time series data (by cab) into tables representing trips and associated durations.  
 - The information pertaining to individual trips is extracted via filtering on pickup and dropoff events (**1 million trips**)
@@ -51,12 +50,24 @@ Table below displays the transformed data: tripID (cabID_timestamp), day, month,
 
 <img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/triptable.png" alt="alt text" width="500" height="250">
 
+Hive Workflow:
+
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/hiveworkflow.png" alt="alt text" width="600" height="350">
+
 Streaming Data
 - The incoming data is filtered in real-time (simulated) based on occupancy to show available cabs.
 - Related files: <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/Storm/cab_topology/cab_topology/stormBolt.py">stormBolt.py</a>, <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/Storm/cab_topology/cab_topology.yaml">cab_topology.yaml</a>
 
 #Live Demo:
 A Live Demo of the project is available here: www.mapmycab.org
+A snap shot of the map with cabs:
+
+
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/realtime.png" alt="alt text" width="500" height="300">
+
+#Presentation Deck
+The presentation slides are available here:
+www.mapmycab.org/aboutme
 
 
 
