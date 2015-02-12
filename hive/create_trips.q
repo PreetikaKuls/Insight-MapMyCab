@@ -1,7 +1,7 @@
 -- This query creates a table of trips across all the cabs. A unique trip ID is assigned to each trip
 -- Trips are detected based on pickup events
 
-DROP TABLE tripTbl;
+DROP TABLE IF EXISTS tripTbl;
 
 CREATE TABLE IF NOT EXISTS tripTbl(
     tripId STRING,

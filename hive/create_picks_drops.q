@@ -1,6 +1,6 @@
 -- Final Table for storing original and generated columns
 
-DROP TABLE final_tbl;
+DROP TABLE IF EXISTS final_tbl;
 CREATE TABLE IF NOT EXISTS final_tbl(
     uid STRING,
     time INT,
