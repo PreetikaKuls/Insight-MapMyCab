@@ -1,4 +1,14 @@
-#Map My Cab
+#Table of Contents
+- <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#introduction">Introduction</a>
+- <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#data-set">Data Set</a>
+- <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#data-transformations">Data Transformations</a>
+- <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#schemas">Schemas</a>
+- <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#live-demo">Live Demo</a>
+- <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#presentation-deck">Presentation Deck</a>
+- <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#instructions-to-run-this-pipeline">Instructions to Run this Pipeline</a>
+
+
+#Introduction
 This is a data engineering project at Insight Data Science. There are two goals that this project aims to accomplish:
 - Provide an API for data scientists and cab dispatchers, for analyzing long term trends in cab behavior w.r.t metrics such as average pickups, dropoffs, occupancy, miles travelled etc.
 - Enable a framework for real-time monitoring of cab locations, so that a user can know the unoccupied cabs across a city and zoom in on a specific neighborhood to spot and catch available cabs nearest to them.
@@ -50,7 +60,7 @@ The windowing operation in Hive is used for translating the continous time serie
 
 Table below displays the transformed data: tripID (cabID_timestamp), day, month, year, idle time (secs), idle time (hours)
 
-<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/triptable.png" alt="alt text" width="500" height="250">
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/triptable.png" alt="alt text" width="400" height="250">
 
 Hive Workflow:
 
