@@ -1,3 +1,9 @@
+#Map My Cab
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/yellowcab.jpg" alt="alt text" width="500" height="300">
+
+
+
+
 #Table of Contents
 - <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#introduction">Introduction</a>
 - <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#data-set">Data Set</a>
