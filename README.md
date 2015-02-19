@@ -1,4 +1,14 @@
-#Map My Cab
+#Table of Contents
+- <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/edit/master/README.md#Introduction">Introduction</a>
+- Data Set
+- Data Transformations
+- Schemas
+- Live Demo
+- Presentation Deck
+- Instructions on How to Run this Pipeline
+
+
+#Introduction
 This is a data engineering project at Insight Data Science. There are two goals that this project aims to accomplish:
 - Provide an API for data scientists and cab dispatchers, for analyzing long term trends in cab behavior w.r.t metrics such as average pickups, dropoffs, occupancy, miles travelled etc.
 - Enable a framework for real-time monitoring of cab locations, so that a user can know the unoccupied cabs across a city and zoom in on a specific neighborhood to spot and catch available cabs nearest to them.
