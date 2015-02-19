@@ -5,7 +5,7 @@
 - <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#schemas">Schemas</a>
 - <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#live-demo">Live Demo</a>
 - <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#presentation-deck">Presentation Deck</a>
-- <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#instructions-on-how-to-run-this-pipeline">Instructions on How to Run this Pipeline</a>
+- <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#instructions-to-run-this-pipeline">Instructions to Run this Pipeline</a>
 
 
 #Introduction
