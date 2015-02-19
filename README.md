@@ -1,5 +1,5 @@
 #Table of Contents
-- <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#Introduction">Introduction</a>
+- <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README#Introduction">Introduction</a>
 - Data Set
 - Data Transformations
 - Schemas
