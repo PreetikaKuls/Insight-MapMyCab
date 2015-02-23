@@ -99,7 +99,7 @@ A snap shot of the map with cabs:
 
 #Presentation Deck
 The presentation slides are available here:
-www.mapmycab.org/aboutme
+<a href= "http://54.183.182.89:5000/aboutme">www.mapmycab.org/aboutme</a>
 
 #Instructions to Run this Pipeline
 
