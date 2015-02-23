@@ -2,8 +2,6 @@
 <img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/yellowcab.jpg" alt="alt text" width="500" height="300">
 
 
-
-
 #Table of Contents
 - <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#introduction">Introduction</a>
 - <a href= "https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/README.md#data-set">Data Set</a>
@@ -95,7 +93,7 @@ A Live Demo of the project is available here: www.mapmycab.org
 A snap shot of the map with cabs:
 
 
-<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/realtime.png" alt="alt text" width="500" height="250">
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/realtime.png" alt="alt text" width="500" height="300">
 
 #Presentation Deck
 The presentation slides are available here:
