@@ -77,12 +77,12 @@ Hive Workflow:
 
 Batch Schema:
 The key for batch storage is organized as yyyy_month_dayofweek. Each column represents an hour and the cells contain metrics for the hour. An additional column stores aggregate metrics for the whole day. This allows the same table to service two types of queries: hour of day and day of week profiles.
-<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/batchschema.png" alt="alt text" width="600" height="250">
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/batchschema.png" alt="alt text" width="650" height="250">
 
 Realtime Schema:
 The realtime schema represents a city for each row (since there is only one city for the current data base, it has one row). The columns represent cabID (the ones that are available as filtered by Storm). The cells contain latitude longitude data.
 
-<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/realtimeschema.png" alt="alt text" width="600" height="250">
+<img src="https://github.com/PreetikaKuls/Insight-MapMyCab/blob/master/images/realtimeschema.png" alt="alt text" width="650" height="250">
 
 Streaming Data
 - The incoming data is filtered in real-time (simulated) based on occupancy to show available cabs.
